@@ -28,14 +28,10 @@
         <q-item-label
           header
         >
-          Menu
+          --
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <EssentialLink/>
       </q-list>
     </q-drawer>
 

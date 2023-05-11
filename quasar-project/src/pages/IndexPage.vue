@@ -1,7 +1,7 @@
 <template>
-  <center>
-    <h3>Login Form</h3>
+  <center style="margin-top:120px">
     <div class="q-pa-md" style="max-width: 400px">
+      <h3>Login Form</h3>
       <form class="q-gutter-md" @submit.prevent="submitForm">
         <q-input outlined v-model="usernamelog" label="Username" type="text" />
         <q-input
@@ -19,13 +19,13 @@
             @click="basic = true"
           /><br />
         </div>
-        <q-btn label="Login" type="submit" color="primary" />
+        <q-btn to="/home" label="Login" type="submit" color="primary" />
       </form>
     </div>
     <q-dialog v-model="basic" transition-show="rotate" transition-hide="rotate">
       <q-card>
         <q-card-section>
-          <div class="text-h6">Apply for an account. Fill out information.</div>
+          <div class="text-h6" style="width:500px;text-align:center">Apply for an account. Fill out information.</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref} from "vue";
 import { Notify } from "quasar";
-import { routes } from "../router/routes";
+import router from '../router'
 
 export default defineComponent({
   name: "IndexPage",
@@ -77,7 +77,8 @@ export default defineComponent({
     const email = ref("");
     const image = ref("");
 
-    const onSubmit = () => {//register
+    const onSubmit = () => {
+      //register
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
@@ -100,19 +101,23 @@ export default defineComponent({
       fetch("http://localhost:5000/data", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          routes.push("/");
+          Notify.create({
+            message: "Register successfully.",
+            position: "top",
+            color: "positive",
+          });
         })
         .catch((error) => console.log("error", error));
     };
 
-    const submitForm = () => { //login
+    const submitForm = () => {
+      //login
       if (!usernamelog.value || !passwordlog.value) {
         Notify.create({
           message: "Please enter both username and password.",
           position: "top",
-          color: "warning"
+          color: "warning",
         });
-
         return;
       }
       const requestBody = {
@@ -129,9 +134,9 @@ export default defineComponent({
             Notify.create({
               message: "Login successfully.",
               position: "top",
-              color: "positive"
+              color: "positive",
             });
-            routes.push('/home');
+            router.push("/home");
           } else {
             Notify.create({
               message: "Login failed. Please try again.",
@@ -146,7 +151,6 @@ export default defineComponent({
 
     return {
       basic: ref(false),
-      fixed: ref(false),
       fname,
       lname,
       username,
