@@ -19,7 +19,7 @@
             @click="basic = true"
           /><br />
         </div>
-        <q-btn to="/home" label="Login" type="submit" color="primary" />
+        <q-btn label="Login" type="submit" color="primary" />
       </form>
     </div>
     <q-dialog v-model="basic" transition-show="rotate" transition-hide="rotate">
@@ -62,11 +62,12 @@
 <script>
 import { defineComponent, ref} from "vue";
 import { Notify } from "quasar";
-import router from '../router'
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "IndexPage",
   setup() {
+    const router = useRouter();
     const usernamelog = ref("");
     const passwordlog = ref("");
 
@@ -136,7 +137,7 @@ export default defineComponent({
               position: "top",
               color: "positive",
             });
-            router.push("/home");
+            router.push({name : "Homepage"})
           } else {
             Notify.create({
               message: "Login failed. Please try again.",

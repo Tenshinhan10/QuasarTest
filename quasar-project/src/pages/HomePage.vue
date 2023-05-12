@@ -59,7 +59,7 @@
                             <q-input outlined v-model="updatefname" label="Firstname" />
                             <q-input outlined v-model="updatelname" label="Lastname" />
                             <q-input outlined v-model="updateusername" label="Username" />
-                            <q-input outlined v-model="updatepassword" label="Password" />
+                            <q-input outlined v-model="updatepassword" label="Password" type="password" />
                             <q-input outlined v-model="updateemail" label="Email" />
                             <q-input outlined v-model="updateimage" label="URL Image" />
                             <q-btn
@@ -85,9 +85,6 @@
 <script setup>
 import { defineComponent, ref} from "vue";
 import { Notify } from "quasar";
-import router from '../router/index' 
-import routes from '../router/routes' 
-import { useRoute } from "vue-router"; 
 
 const columns = ref([
   { name: "id", align: "left", label: "ID", field: "id", sortable: true },
@@ -203,7 +200,6 @@ const onSubmitUpdate = () => {
             color: "positive",
           });
       fetchData();
-      router.push("/");
     })
     .catch((error) => console.log("error", error));
 };
@@ -228,13 +224,11 @@ const onDelete = (id) => {
             color: "positive",
           });
         fetchData();
-        router.push('/');
       }
       throw new Error('Network response was not ok.');
     })
     .then(result => {
       fetchData();
-      router.push('/');
     })
     .catch(error => console.log('error', error));
 };
